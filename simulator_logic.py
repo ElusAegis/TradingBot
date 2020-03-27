@@ -3,6 +3,7 @@ import pandas as pd
 import random
 
 from APIinteraction import *
+from dummy_bot import *
 
 
 class GameMode(enum.Enum):
@@ -18,9 +19,12 @@ class GameMode(enum.Enum):
 
 
 class Player:
-    def __init__(self):
+    def __init__(self, alive):
         self.balance = 0
         self.stock_volume = 0
+
+        if not alive:
+            self.decision_maker = DummyBot()
 
     def buy(self, amount, price):
         self.balance -= amount * price
@@ -66,11 +70,12 @@ class OfflineGame:
 
 
 class GameLogic:
-    def __init__(self, game_mode=GameMode.OFFLINE, stock_name="ETHBTC", file_path="stock_data/Carriage_Service.csv",
+    def __init__(self, player1=True, player2=True, game_mode=GameMode.OFFLINE, stock_name="ETHBTC", file_path="stock_data/Carriage_Service.csv",
                  safe=False):
 
-        self.player1 = Player()
-        self.player2 = Player()
+        self.player1 = Player(player1)
+        self.player2 = Player(player2)
+
         self.game_mode = game_mode
         self.data = {"price": [], "name": stock_name}
 
@@ -99,13 +104,33 @@ class GameLogic:
                 self.data["price"][-1] * self.player2.stock_volume + self.player2.balance]
 
     def sell(self, index, amount):
+        price = self.data["price"][-1]
         if index == 1:
-            self.player1.sell(amount, self.data["price"][-1])
+            self.player1.sell(amount, price)
         if index == 2:
-            self.player2.sell(amount, self.data["price"][-1])
+            self.player2.sell(amount, price)
 
     def buy(self, index, amount):
+        price = self.data["price"][-1]
         if index == 1:
-            self.player1.buy(amount, self.data["price"][-1])
+            self.player1.buy(amount, price)
         if index == 2:
-            self.player2.buy(amount, self.data["price"][-1])
+            self.player2.buy(amount, price)
+
+    def question(self, index):
+        price = self.data["price"][-1]
+        if index == 1:
+            amount = self.player1.decision_maker.buy(price)
+            if not amount:
+                amount = self.player1.decision_maker.sell(price)
+                self.player1.sell(amount, price)
+            else:
+                self.player1.buy(amount, price)
+
+        if index == 2:
+            amount = self.player2.decision_maker.buy(price)
+            if not amount:
+                amount = self.player2.decision_maker.sell(price)
+                self.player2.sell(amount, price)
+            else:
+                self.player2.buy(amount, price)

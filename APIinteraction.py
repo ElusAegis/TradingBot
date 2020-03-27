@@ -59,7 +59,7 @@ class BinanceApi(Api):
 
     def __init__(self, safe=False):
         self.safe = safe
-        self.api_key = "usSziTXvOCyDwC3foIlDHwH89DYJzbV6p0SrZ5MW9vKS6egRbfkLu21RYNur2AjI"
+        self.api_key = "7cWdy2o4EJ2edLEovp7c1hFII8762VNhUj937n6Je0KISndteaqnJmdQ5sMeOKk9"
         self.base_endpoint = "https://api.binance.com"
 
         info_request = "/api/v3/exchangeInfo"
