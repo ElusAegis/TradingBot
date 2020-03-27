@@ -1,0 +1,63 @@
+Aim:
+
+Create an automated trading bot for Binance in Python using Machine Learning. The Bot will make desitions based on the price chart as well as recent news. Also create a testing enviroment with visual client, as well as a light tester.
+
+Project structure:
+
+It will consist of 4 components:
+
+1. Visual simulator
+2. Light simulator 
+3. Bot logic
+4. Live trading wrapper 
+
+
+Requirments:
+1. Data (27.03.2020-)
+✅	1. Gather stock price data for a considerable period of time, and save it for futher referance (27.03.2020)
+
+		Plan: Use binance API to gather KandelStick data repeatedly, and append it to the existing file, run until interaupted 
+
+		Realisation:
+		https://medium.com/swlh/retrieving-full-historical-data-for-every-cryptocurrency-on-binance-bitmex-using-the-python-apis-27b47fd8137f
+		With some modifications due to recent changes in binance
+
+✅	2. Update exicting records with new data of stock prices (27.03.2020)
+	3. Get current market deapth data
+	4. Get most recent trading preiod data
+2. Create visual testing enviroment (22.03.2020-24.03.2020)
+✅	1. View the price change 
+✅	2. Allow live market data
+✅	3. Allow market data from file 
+✅	4. See trading statistics
+3. Create light test environment 
+✅	1. Create a simple dumn bot (27.03.2020)
+		a) Initialise function
+		b) decide if need to buy using recent price info
+		c) hold info about current open orders
+✅	2. Allow market data from file (27.03.2020)
+	3. Choose starting point (27.03.2020)
+✅		a) Randomly 
+		b) From input 
+	4. Get bot trading statistics
+✅	5. Fast! (27.03.2020)
+4. Create bot-binance interaction wrapper 
+	1. Use Binance-Python package 
+5. Create bot logic using ML
+	1. Build a ML model for trading using just stock price data
+		https://www.researchgate.net/post/Can_Machine_Learning_Techniques_Be_Used_To_Predict_Stock_Prices
+
+		a) Reinforement model 
+		b) NN models 
+		c) Use degrading memory
+		d) Kaggle models 
+	2. Add other numbers 
+		a) Market deapth
+		b) Amount of demand 
+		c) Other paraments 
+	3. Find out what is useful
+	4. Add news coverage
+		1. Find top n synonyms for a given key word
+		2. Find news for list of given words 
+		3. Classify news as positive-negative
+		4. Give each source a rating of trust

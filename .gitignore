@@ -1,0 +1,4 @@
+.idea
+stock_data
+venv
+*.pyc
